@@ -23,7 +23,7 @@ class Measure:
         logging.warn("Failed to create chunk")
         return False
 
-    def sum(self):
+    def sum(self): 
         sum = 0
         for i in range(len(self.chunks)):
             if self.chunks[i] is not False:
@@ -31,7 +31,7 @@ class Measure:
             return sum
         return False
 
-    def to_string(self):
+    def to_string(self): #Print the sequence of measurement
         self.line = "------------------------------------------------------------------------------------------"
         for i in range(len(self.chunks)):
             if not self.chunks[i] = 0:
