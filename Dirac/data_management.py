@@ -41,17 +41,3 @@ class Measure:
         self.line += "------------------------------------------------------------------------------------------"+"\n"
         logging.debug("Inserted measure")    
         return self.line
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
