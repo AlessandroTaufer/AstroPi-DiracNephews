@@ -23,10 +23,21 @@ class Measure:
         logging.warn("Failed to create chunk")
         return False
 
-    def sum(self):
+    def sum(self): 
         sum = 0
         for i in range(len(self.chunks)):
             if self.chunks[i] is not False:
                 sum += self.chunks[i]
             return sum
         return False
+
+    def to_string(self): #Print the sequence of measurement
+        self.line = "------------------------------------------------------------------------------------------"
+        for i in range(len(self.chunks)):
+            if not self.chunks[i] = 0:
+                self.line += "x:"+ str(x)+"y:"+str(y)+"z:"+str(z)+"time:"+str(time)+"\n"
+                logging.debug("Inserted measure")
+        self.line += "Ctot"+ str(sum())+"\n"
+        self.line += "------------------------------------------------------------------------------------------"+"\n"
+        logging.debug("Inserted measure")    
+        return self.line
