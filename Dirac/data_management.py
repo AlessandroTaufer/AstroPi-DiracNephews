@@ -13,7 +13,7 @@ class Chunk:
         return
 
     def to_string(self):
-        return "x:" + str(self.x)+"y:"+str(self.y)+"z:"+str(self.z)+"time:"+str(self.time)+"\n"
+        return "x: " + str(self.x)+" y: "+str(self.y)+" z: "+str(self.z)+" time: "+str(self.time)+"\n"
 
 
 class Measure:
@@ -26,12 +26,12 @@ class Measure:
         for i in range(len(self.chunks)):
             if not self.chunks[i]:
                 self.chunks[i] = Chunk(x, y, z, time)
-                logging.debug("Inserted chunk")
+                logging.debug("Inserted chunk in measure object")
                 return True
         logging.warn("Failed to create chunk")
         return False
 
-    def sum(self): 
+    def sum(self):
         sum = 0
         for i in range(len(self.chunks)):
             if self.chunks[i] is not False:
@@ -40,12 +40,11 @@ class Measure:
         return False
 
     def to_string(self):  # Print the sequence of measurement
-        line = "------------------------------------------------------------------------------------------"
+        line = "<---------------------------------------------------------------------------------------->"+"\n"
         for i in range(len(self.chunks)):
-            if i != 3:
-                line += self.chunks[i].to_string()
-                logging.debug("Inserted measure")
+            line += self.chunks[i].to_string()
+            logging.debug("Inserted measure on file")
         line += "Ctot" + str(self.sum()) + "\n"
-        line += "------------------------------------------------------------------------------------------"+"\n"
-        logging.debug("Inserted measure")    
+        line += "*----------------------------------------------------------------------------------------*"+"\n"
+        logging.debug("Inserted measure")
         return line

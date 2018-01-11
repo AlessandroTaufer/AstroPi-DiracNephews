@@ -46,7 +46,7 @@ class EventRecognition:  # Takes measures and looks for events
 
     def save_measure(self, measure):  # Saves a measure on the file
         logging.debug("Saving data on file")
-        self.file_manager.write(measure)
+        self.file_manager.write_measure(measure)
         return
 
     def recognize(self):  # Recognize an event and saves measures

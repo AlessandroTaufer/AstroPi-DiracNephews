@@ -5,7 +5,7 @@ import event_recognition
 #from sense_hat import SenseHat
 
 
-def main():
+def main(): # Main program
     #sense = SenseHat()
     sense = None
     backup_file = "file.txt"
@@ -17,4 +17,3 @@ def main():
 
 if "__main__" == __name__:
     main()
-
