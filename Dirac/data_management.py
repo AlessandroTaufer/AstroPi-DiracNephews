@@ -1,11 +1,19 @@
+import logging
+import math
+
+
 class Chunk:
     def __init__(self, x, y, z, time):
         self.x = x
         self.y = y
         self.z = z
         self.time = time
+        self.average = math.sqrt(x**2 + y**2 + z**2)
         logging.debug("Created a chunk with x: " + str(x) + " y:" + str(y) + " z:" + str(z) + "at time: " + str(time) )
         return
+
+    def to_string(self):
+        return "x:" + str(self.x)+"y:"+str(self.y)+"z:"+str(self.z)+"time:"+str(self.time)+"\n"
 
 
 class Measure:
@@ -27,17 +35,17 @@ class Measure:
         sum = 0
         for i in range(len(self.chunks)):
             if self.chunks[i] is not False:
-                sum += self.chunks[i]
+                sum += self.chunks[i].average
             return sum
         return False
 
-    def to_string(self): #Print the sequence of measurement
-        self.line = "------------------------------------------------------------------------------------------"
+    def to_string(self):  # Print the sequence of measurement
+        line = "------------------------------------------------------------------------------------------"
         for i in range(len(self.chunks)):
-            if not self.chunks[i] = 0:
-                self.line += "x:"+ str(x)+"y:"+str(y)+"z:"+str(z)+"time:"+str(time)+"\n"
+            if i != 3:
+                line += self.chunks[i].to_string()
                 logging.debug("Inserted measure")
-        self.line += "Ctot"+ str(sum())+"\n"
-        self.line += "------------------------------------------------------------------------------------------"+"\n"
+        line += "Ctot" + str(self.sum()) + "\n"
+        line += "------------------------------------------------------------------------------------------"+"\n"
         logging.debug("Inserted measure")    
-        return self.line
+        return line

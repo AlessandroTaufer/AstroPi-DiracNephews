@@ -1,15 +1,18 @@
 import time
 import logging
 import math
-from sense_hat import SenseHat
+import event_recognition
+#from sense_hat import SenseHat
 
 
 def main():
-    sense = SenseHat()
+    #sense = SenseHat()
+    sense = None
+    backup_file = "file.txt"
+    trigger_value = 1000
+    program = event_recognition.EventRecognition(sense, trigger_value, backup_file)
     logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
-    for i in range(100):
-        print(sense.compass_raw)
-        time.sleep(1)
+    program.recognize()
 
 
 if "__main__" == __name__:

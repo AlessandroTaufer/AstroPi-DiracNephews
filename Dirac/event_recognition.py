@@ -17,18 +17,26 @@ class EventRecognition:  # Takes measures and looks for events
         measure = data_management.Measure()
         for i in range(3):  # Inserts all 3 chunks in the measure
             logging.debug("Inserting a new chunk in the measure")
-            x, y, z, time = self.read_compass()
-            measure.insert_chunk(x, y, z, time)
+            x, y, z, current_time = self.read_compass()
+            measure.insert_chunk(x, y, z, current_time)
         return measure
 
-    def read_compass(self):  # Returns compass value and current time
-        raw_data = self.sense.compass_raw
-        x = raw_data.get('x')
-        y = raw_data.get('y')
-        z = raw_data.get('z')
-        time = datetime.datetime.time(datetime.datetime.now())  # Gets current time
-        logging.debug("Compass value(xyz): " + x + " " + y + " " + z + "  at" + time)
-        return x, y, z, time
+    # def read_compass(self):  # Returns compass value and current time
+    #     raw_data = self.sense.compass_raw
+    #     x = raw_data.get('x')
+    #     y = raw_data.get('y')
+    #     z = raw_data.get('z')
+    #     current_time = datetime.datetime.time(datetime.datetime.now())  # Gets current time
+    #     logging.debug("Compass value(xyz): " + x + " " + y + " " + z + "  at" + current_time)
+    #     return x, y, z, current_time
+
+    def read_compass(self): # Debug method
+        time.sleep(0.5)
+        x = input("Insert x value:")
+        y = input("Insert y value:")
+        z = input("Insert z value:")
+        current_time = datetime.datetime.time(datetime.datetime.now())  # Gets current time
+        return x, y, z, current_time
 
     def check_measure(self, measure):  # Checks if the measure has spotted and event
         if measure.sum() > self.trigger:
@@ -36,7 +44,7 @@ class EventRecognition:  # Takes measures and looks for events
             return True
         return
 
-    def save_measure(self, measure): # Saves a measure on the file
+    def save_measure(self, measure):  # Saves a measure on the file
         logging.debug("Saving data on file")
         self.file_manager.write(measure)
         return
