@@ -1,0 +1,14 @@
+1) Output file:
+	Il file deve essere binario
+	Un file per ogni evento ossia 3 chunk in ogni file
+	Nell'Header del file deve comparire tempo di campionamento, numero di dati, tempo di inizio in UTC, varie ed eventuali per il seguito...
+	Nel nome del file deve apparire il tempo di inizio in UTC
+2) Provare a vedere quanto spazio serve per salvare le tre ore di dati in binario considerando il tempo di campionamento del magnetometro
+   (eventualmente vedere quanti sono il numero massimo di dati salvabili)
+3) Convenzioni sui nomi:
+    x,y,z valori istantanei del campo magnetico nelle tre direzioni
+   chunk: singolo gruppo di dati da analizzare c1, c2, c3..... (un array) ci media istantanea, Ctot media del chunk Cthr soglia
+   TEMPO DI CAMPIONAMENTO: intervallo di tempo tra un singolo dato e l'altro, costante dipendente dallo strumento 
+
+
+	
