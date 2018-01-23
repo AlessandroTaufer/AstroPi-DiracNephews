@@ -2,7 +2,7 @@ import logging
 import math
 
 
-class Chunk:
+class InstantValue:
     def __init__(self, x, y, z, time):
         self.x = x
         self.y = y
@@ -15,18 +15,21 @@ class Chunk:
     def to_string(self):
         return "x: " + str(self.x)+" y: "+str(self.y)+" z: "+str(self.z)+" time: "+str(self.time)+"\n"
 
+    def to_byte(self):
+        pass
 
-class Measure:
+
+class Chunk:
     def __init__(self, c0=False, c1=False, c2=False):
         self.chunks = [c0, c1, c2]  # Chunk vector
         self.chunks_sum = self.sum()
         return
 
-    def insert_chunk(self, x, y, z, time):  # Insert a chunk in the measure
+    def insert_instant_value(self, x, y, z, time):  # Insert a chunk in the measure
         for i in range(len(self.chunks)):
             if not self.chunks[i]:
-                self.chunks[i] = Chunk(x, y, z, time)
-                logging.debug("Inserted chunk in measure object")
+                self.chunks[i] = InstantValue(x, y, z, time)
+                logging.debug("Inserted instant value in chunk object")
                 return True
         logging.warn("Failed to create chunk")
         return False
@@ -48,3 +51,6 @@ class Measure:
         line += "*----------------------------------------------------------------------------------------*"+"\n"
         logging.debug("Inserted measure")
         return line
+
+    def to_byte(self):
+        pass
