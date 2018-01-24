@@ -10,20 +10,20 @@ class WriteToFile:  # Write measures on the file
     def write_measure(self, measure): # Write a new measure on the file
         if self.is_full():
             self.erase_measure()
-        file = open(self.file, "w")
+        file = open(self.file, "wb") # volendo se il file si chiude e poi vogliamo riaprirlo con file = open(self.file, "ab") non si riscrivono i dati scritti precedentemente, tuttavia dà problemi nel testing
         file.write(measure.to_string())
         self.current_measures += 1
         logging.debug("Inserted measure")
         file.close()
 
     def read(self): # Reads all the file
-        file = open (self.file, "r")
+        file = open (self.file, "rb")
         text = file.read()
         file.close()
         return text
 
     def read_line(self, row): # Reads a file line
-        file = open(self.file, "r")
+        file = open(self.file, "rb")
         for i in range (row):
             text = file.readLine()
         file.close()
