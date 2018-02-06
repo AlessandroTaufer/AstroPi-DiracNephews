@@ -3,6 +3,9 @@ import file_management
 import datetime
 import logging
 import time
+import io
+# import picamera
+from PIL import Image
 from threading import Thread
 
 
@@ -13,7 +16,7 @@ class EventRecognition:  # Takes measures and looks for events
         self.threshold = threshold  # Event trigger value
         logging.debug("Current threshold: " + str(threshold))
         self.chunks = []  # All taken measures
-        self.chunks_lapse = 1
+        self.chunks_lapse = 1 # Time between two chunks
         self.stop = False
 
     def get_chunk(self):  # Takes a chunk measure and returns it
@@ -30,7 +33,8 @@ class EventRecognition:  # Takes measures and looks for events
     #     y = raw_data.get('y')
     #     z = raw_data.get('z')
     #     current_time = datetime.datetime.time(datetime.datetime.now())  # Gets current time
-    #     logging.debug("Compass value(xyz): " + x + " " + y + " " + z + "  at" + current_time)
+    #     logging.debug("Compass value(xyz): " + x + " " + y + " " + z + "  at" + str(current_time))
+    #     self.capture_image() TODO Uncomment that
     #     return x, y, z, current_time
 
     def read_compass(self):  # Debug method
@@ -43,24 +47,24 @@ class EventRecognition:  # Takes measures and looks for events
 
     def event_finder(self):  # Checks if the measures countains an event
         logging.debug("Starting event finder")
-        try:
-            for i in range(len(self.chunks)-1):
-                if self.chunks[i].sum > self.threshold:
-                    logging.debug("Found and event!")
-                    self.save_measure((self.chunks[i-1], self.chunks[i], self.chunks[i+1]))
-                if i > 0:
-                    self.chunks.pop(i-1)
-                    logging.debug("Erased a old chunk")
-                time.sleep(self.chunks_lapse)
-        except:
-            logging.warning("And error occured during the event finder ")
-            logging.debug("Blocked event finder loop")
+        # try:
+        for i in range(len(self.chunks)-1):
+            if self.chunks[i].sum() > self.threshold:
+                self.threshold = self.chunks[i].sum()
+                logging.debug("Found and event!")
+                self.save_measure((self.chunks[i-1], self.chunks[i], self.chunks[i+1]))
+            if i > 0:
+                self.chunks.pop(i-1)
+                logging.debug("Erased a old chunk")
+            time.sleep(self.chunks_lapse)
+        # except:
+        #     logging.warning("And error occured during the event finder ")
+        #     logging.debug("Blocked event finder loop")
         return
 
     def save_measure(self, measures_set):  # Saves a set of measures on the file
         logging.debug("Saving data on file")
-        for i in measures_set:
-            self.file_manager.write_measure(i)
+        self.file_manager.write_measure(measures_set)
         return
 
     def recognize(self):  # Recognize an event and saves measures
@@ -73,17 +77,23 @@ class EventRecognition:  # Takes measures and looks for events
         logging.debug("Initializing acquire measure loop")
         i = 0
         while not self.stop:
-            try:
-                if i >= 3:
-                    # Thread(self.event_finder).start()
-                    self.event_finder()
-                    i = 0
-                    self.event_finder()
-                self.chunks.append(self.get_chunk())
-                time.sleep(self.chunks_lapse)
-                i += 1
-            except:
-                logging.warning("An error occured during the acquire mesure loop")
+            # try:
+            if i >= 3:
+                # Thread(self.event_finder).start()
+                self.event_finder()
+            self.chunks.append(self.get_chunk())
+            time.sleep(self.chunks_lapse)
+            i += 1
+            # except:
+            #     logging.warning("An error occured during the acquire mesure loop")
         logging.debug("Blocked measure loop")
         return
 
+    def capture_image(self): # Capture an image and returns it
+        logging.debug("Getting an image")
+        stream = io.BytesIO()
+        with picamera.PiCamera() as camera:
+            camera.capture(stream, format='jpeg') #TODO very if it works without sleep(2)
+        stream.seek(0) # Rewind the stream
+        image = Image.open(stream)
+        return image

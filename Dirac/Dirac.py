@@ -13,7 +13,7 @@ def main():  # Main program
     #sense = SenseHat()
     sense = None  # Debug code
     logging_setup()
-    backup_file = "file.txt"
+    backup_file = "file"
     trigger_value = input("Insert the debug threshold value\n")  # Debug code
     program = event_recognition.EventRecognition(sense, trigger_value, backup_file)
     program.recognize()
