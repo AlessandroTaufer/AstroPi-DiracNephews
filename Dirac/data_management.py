@@ -13,11 +13,8 @@ class InstantValue:  # Magnetometer measure on a given time
         logging.debug("Created a chunk with x: " + str(x) + " y:" + str(y) + " z:" + str(z) + "at time: " + str(time))
         return
 
-    def to_string(self):
+    def to_string(self): # Return a string containing all the attributes
         return str(self.x)+" "+str(self.y)+" "+str(self.z)+" "+str(self.time)+"\n"
-
-    def to_byte(self):
-        pass
 
 
 class Chunk:  # InstantValues collection
@@ -35,7 +32,7 @@ class Chunk:  # InstantValues collection
         logging.warn("Failed to create chunk")
         return False
 
-    def sum(self):
+    def sum(self): # Calculate the sum of the chunk
         sum = 0
         for i in range(len(self.instant_values)):
             if self.instant_values[i] is not False:
@@ -53,9 +50,6 @@ class Chunk:  # InstantValues collection
         line += "\n\n"
         logging.debug("Inserted measure on file")
         return line
-
-    def to_byte(self):
-        pass
 
     def get_images(self):  # Return all the images of the chunk
         images = []

@@ -2,7 +2,7 @@
 import time
 
 
-def project(sense):
+def project(sense): # Project a screensaver on the led
     end = False
     sense.low_light = True
 
