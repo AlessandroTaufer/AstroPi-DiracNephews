@@ -16,7 +16,7 @@ class EventRecognition:  # Takes measures and looks for events
         self.threshold = threshold  # Event trigger value
         logging.debug("Current threshold: " + str(threshold))
         self.chunks = []  # All taken measures
-        self.chunks_lapse = 1 # Time between two chunks
+        self.chunks_lapse = 1  # Time between two chunks
         self.stop = False
 
     def get_chunk(self):  # Takes a chunk measure and returns it
@@ -80,20 +80,20 @@ class EventRecognition:  # Takes measures and looks for events
             # try:
             if i >= 3:
                 # Thread(self.event_finder).start()
-                self.event_finder()
+                Thread(target=self.event_finder).start()
             self.chunks.append(self.get_chunk())
             time.sleep(self.chunks_lapse)
             i += 1
             # except:
-            #     logging.warning("An error occured during the acquire mesure loop")
+            #     logging.warning("An error occured during the acquire measure loop")
         logging.debug("Blocked measure loop")
         return
 
-    def capture_image(self): # Capture an image and returns it
+    def capture_image(self):  # Capture an image and returns it
         logging.debug("Getting an image")
         stream = io.BytesIO()
         with picamera.PiCamera() as camera:
-            camera.capture(stream, format='jpeg') #TODO very if it works without sleep(2)
+            camera.capture(stream, format='jpeg')
         stream.seek(0) # Rewind the stream
         image = Image.open(stream)
         return image

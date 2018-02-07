@@ -1,7 +1,7 @@
-import time
 import logging
-import math
 import event_recognition
+import screen_saver
+from threading import Thread
 #from sense_hat import SenseHat
 
 
@@ -11,7 +11,8 @@ def logging_setup():
 
 def main():  # Main program
     #sense = SenseHat()
-    sense = None  # Debug code
+    sense = 1  # TODO Debug code
+    Thread(target=screen_saver.project, args=(sense,)).start()
     logging_setup()
     backup_file = "file"
     trigger_value = input("Insert the debug threshold value\n")  # Debug code
